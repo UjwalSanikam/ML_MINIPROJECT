@@ -1,0 +1,6 @@
+venv/
+data/
+NonVectrinoData.zip
+__pycache__/
+*.pyc
+inspect_out.txt
