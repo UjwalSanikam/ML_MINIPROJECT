@@ -1,7 +1,7 @@
 # Machine Learning for Predicting Sediment Particle Size Distributions
 
 UE24CS352A Machine Learning mini-project (PES University), individual submission.
-Author: [your name, SRN]
+Author: [Ujwal Sanikam L, PES1UG24CS506]
 
 Predicts two properties of suspended sediment particle size distributions (PSDs) in
 South San Francisco Bay from hydrodynamic and water-chemistry measurements:
