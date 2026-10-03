@@ -1,0 +1,43 @@
+Loaded dataset.csv: 897 rows; features ['S', 'T', 'ub', 'u']; targets ['d50', 'sigma2']
+
+================================================================
+5a. Split: train 627 / CV 135 / test 135 rows (70/15/15)
+
+5b. Tuning C and epsilon on the CV set (RBF kernel; epsilon in standardised units)
+  d50: best C = 1024, epsilon = 0.3162   (CV r2 = 0.625)
+  sigma2: best C = 128, epsilon = 0.5623   (CV r2 = 0.481)
+
+================================================================
+5c. Test-set results (15% test set, model trained on the 70% training set)
+  d50: SVR r2=0.756 RMSE=18.68 MAE=14.29   |   RF r2=0.760 RMSE=18.53 MAE=12.35
+  sigma2: SVR r2=0.652 RMSE=467.02 MAE=354.63   |   RF r2=0.732 RMSE=410.12 MAE=306.63
+
+  Repeated random 70/15/15 splits (SVR re-tuned on a coarse grid each time), n=20
+  d50    SVR: r2 = 0.609 +/- 0.046
+  d50    RF : r2 = 0.729 +/- 0.038
+  sigma2 SVR: r2 = 0.445 +/- 0.070
+  sigma2 RF : r2 = 0.613 +/- 0.055
+
+================================================================
+5d. Honest checks (hyperparameters from 5b; same splits as the RF in Step 4)
+
+Chronological split within each season (first 70% of time = train, last 30% = test)
+  d50   : SVR r2=0.193 RMSE=35.23   |   RF r2=0.306 RMSE=32.66
+  sigma2: SVR r2=-0.297 RMSE=766.87   |   RF r2=0.168 RMSE=614.36
+
+Leave-one-season-out (train on two seasons, test on the third)
+  held out Summer d50   : SVR r2=-18.025   |   RF r2= -0.035
+  held out Summer sigma2: SVR r2= -1.748   |   RF r2= -0.176
+  held out Winter d50   : SVR r2=-59.654   |   RF r2= -0.713
+  held out Winter sigma2: SVR r2= -3.652   |   RF r2= -5.229
+  held out Spring d50   : SVR r2= -6.783   |   RF r2= -5.382
+  held out Spring sigma2: SVR r2= -0.205   |   RF r2= -3.642
+
+================================================================
+5e. Comparison table (test r2)
+                                RF d50  SVR d50  RF sigma2  SVR sigma2
+evaluation                                                            
+Random split                     0.760    0.756      0.732       0.652
+Random split (mean of repeats)   0.729    0.609      0.613       0.445
+Chronological                    0.306    0.193      0.168      -0.297
+Leave-one-season-out (mean)     -2.043  -28.154     -3.016      -1.868
