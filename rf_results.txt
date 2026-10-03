@@ -1,0 +1,41 @@
+Loaded dataset.csv: 897 rows; features ['S', 'T', 'ub', 'u']; targets ['d50', 'sigma2']
+
+================================================================
+4a. Feature importance (1000 runs, 10 trees, 70/30)
+    FI_d50  FI_sigma2
+T    0.489      0.613
+S    0.346      0.160
+ub   0.101      0.132
+u    0.064      0.096
+
+================================================================
+4b. Choosing the number of trees (OOB score, 70% training set)
+  d50: plateau OOB r2 = 0.722; first n within 0.005 of plateau = 88
+  sigma2: plateau OOB r2 = 0.623; first n within 0.005 of plateau = 96
+  -> using n_estimators = 96 for both targets
+
+================================================================
+4c. Random 70/30 split (as in the paper), 96 trees
+  d50: primary split (seed 42) r2=0.761  RMSE=19.14  MAE=13.50
+       over 30 random splits: r2 = 0.740 +/- 0.025
+  sigma2: primary split (seed 42) r2=0.686  RMSE=430.04  MAE=305.20
+       over 30 random splits: r2 = 0.630 +/- 0.039
+
+================================================================
+4d. Honest checks
+
+How much variance does season alone explain? (season-mean predictor, in-sample)
+  d50: r2 = 0.569
+  sigma2: r2 = 0.457
+
+Chronological split within each season (first 70% of time = train, last 30% = test)
+  d50: r2=0.306  RMSE=32.66  MAE=22.58
+  sigma2: r2=0.168  RMSE=614.36  MAE=483.15
+
+Leave-one-season-out (train on two seasons, test on the third)
+  held out Summer d50   : r2= -0.035  RMSE=33.68  MAE=28.38
+  held out Summer sigma2: r2= -0.176  RMSE=881.56  MAE=752.91
+  held out Winter d50   : r2= -0.713  RMSE=18.47  MAE=16.24
+  held out Winter sigma2: r2= -5.229  RMSE=1156.71  MAE=1063.33
+  held out Spring d50   : r2= -5.382  RMSE=68.83  MAE=63.30
+  held out Spring sigma2: r2= -3.642  RMSE=791.26  MAE=705.32
